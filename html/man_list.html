@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Archive - 글 목록</title>
+
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/man_list.css">
+</head>
+<body>
+
+  <!-- 네비게이션 -->
+ <header class="nav-bar">
+  <div class="nav-left">
+      <img src="assets/logo_img.png" alt="Error Archive Logo" class="nav-logo">
+      <a href="list.html" class="nav-list">Error List</a>
+  </div>
+  <div class="nav-right">
+    <a href="login.html" class="nav-logout">Log out</a>
+  </div>
+</header>
+
+
+
+
+  <!-- 메인 -->
+  <main class="list-container">
+    <div class="list-header">
+      <div class="header-right">
+        <div class="category-box">
+          <label for="category">카테고리</label>
+          <select id="category" name="category">
+            <option value="all">전체</option>
+            <option value="linux">Linux</option>
+            <option value="database">Database</option>
+            <option value="python">Python</option>
+            <option value="docker">Docker</option>
+            <option value="kubernetes">Kubernetes</option>
+            <option value="aws">AWS</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <table class="post-table">
+      <thead>
+        <tr>
+          <th>제목</th>
+          <th>ID</th>
+          <th>작성날짜</th>
+        </tr>
+      </thead>
+      <tbody id="post-body">
+        <!-- JS에서 자동으로 채워짐 -->
+      </tbody>
+    </table>
+
+    <!-- 페이지네이션 -->
+    <div class="pagination" id="pagination">
+      <!-- JS에서 버튼 생성 -->
+    </div>
+  </main>
+
+  <script>
+    /* ✅ 게시글 더미 데이터 */
+    const posts = [];
+    for (let i = 1; i <= 35; i++) {
+      posts.push({
+        title: `예시 게시글 제목 ${i}`,
+        user: `user${i}`,
+        date: "2025-10-26"
+      });
+    }
+
+    /* ✅ 페이지네이션 설정 */
+    const rowsPerPage = 10;
+    let currentPage = 1;
+
+    function displayPosts(page) {
+      const postBody = document.getElementById("post-body");
+      postBody.innerHTML = "";
+
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const pagePosts = posts.slice(start, end);
+
+      pagePosts.forEach(post => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><a href="post.html">${post.title}</a></td>
+          <td>${post.user}</td>
+          <td>${post.date}</td>
+        `;
+        postBody.appendChild(row);
+      });
+    }
+
+    function setupPagination() {
+      const pagination = document.getElementById("pagination");
+      pagination.innerHTML = "";
+
+      const pageCount = Math.ceil(posts.length / rowsPerPage);
+
+      const prev = document.createElement("a");
+      prev.textContent = "<";
+      prev.classList.add("prev");
+      prev.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          displayPosts(currentPage);
+          setupPagination();
+        }
+      });
+      pagination.appendChild(prev);
+
+      for (let i = 1; i <= pageCount; i++) {
+        const pageBtn = document.createElement("a");
+        pageBtn.textContent = i;
+        if (i === currentPage) pageBtn.classList.add("active");
+        pageBtn.addEventListener("click", () => {
+          currentPage = i;
+          displayPosts(currentPage);
+          setupPagination();
+        });
+        pagination.appendChild(pageBtn);
+      }
+
+      const next = document.createElement("a");
+      next.textContent = ">";
+      next.classList.add("next");
+      next.addEventListener("click", () => {
+        if (currentPage < pageCount) {
+          currentPage++;
+          displayPosts(currentPage);
+          setupPagination();
+        }
+      });
+      pagination.appendChild(next);
+    }
+
+    /* ✅ 초기 렌더링 */
+    displayPosts(currentPage);
+    setupPagination();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error Archive - 글 상세보기</title>
+
+  <!-- 공통 레이아웃 및 상세보기 스타일 -->
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/post_view.css">
+</head>
+<body>
+
+ <header class="nav-bar">
+  <div class="nav-left">
+      <img src="assets/logo_img.png" alt="Error Archive Logo" class="nav-logo">
+      <a href="list.html" class="nav-list">Error List</a>
+  </div>
+  <div class="nav-right">
+    <div class="dropdown">
+      <button class="nav-link" id="mypage-btn">MY Page ▾</button>
+      <div class="dropdown-content" id="mypage-menu">
+        <a href="my_note.html">📝 오답노트</a>
+      </div>
+    </div>
+    <a href="login.html" class="nav-logout">Log out</a>
+  </div>
+</header>
+
+  <!-- ✅ 글 상세보기 컨테이너 -->
+  <main class="post-container">
+    <!-- 제목 및 작성자 -->
+    <div class="post-header">
+      <h2>오류의 제목 ...</h2>
+      <div class="post-meta">
+        <span>작성자: user1</span>
+        <span>작성일: 2025-10-26</span>
+      </div>
+    </div>
+
+    <!-- 본문 -->
+    <div class="post-content">
+      <div class="post-section">
+        <h4>오류의 내용</h4>
+        <p>(사진 첨부 가능)</p>
+      </div>
+
+      <div class="post-section">
+        <h4>오류의 해결</h4>
+        <p>원인 분석 및 해결 방법...</p>
+      </div>
+    </div>
+    
+    <!-- 추천/비추천 -->
+    <div class="vote-section">
+      <button class="vote-btn upvote" onclick="vote('up')">👍 추천 <span id="up-count">6</span></button>
+      <button class="vote-btn downvote" onclick="vote('down')">👎 비추천 <span id="down-count">2</span></button>
+    </div>
+    <div>   
+        <button type="button" id = "btn_ad"  class = "btn_addel" onclick="submit_ad()">수정</button>
+        <button type="button" id = "btn_del" class = "btn_addel" onclick="submit_del()">삭제</button>
+    </div>
+    <!-- 댓글 입력창 -->
+    <div class="comment-box">
+      <input type="text" id="commentInput" placeholder="댓글 작성...">
+      <button onclick="addComment()">등록</button>
+    </div>
+
+    <!-- 댓글 목록 -->
+    <div class="comment-list" id="commentList">
+      <div class="comment-item">
+        <strong>ID 댓글작성샘플</strong>
+        <p>댓글 내용 예시...</p>
+      </div>
+      <div class="comment-item">
+        <strong>ID 다른사용자</strong>
+        <p>다른 댓글 내용 예시...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ✅ JS -->
+  <script>
+    // 드롭다운 제어
+    function toggleDropdown() {
+      document.getElementById("dropdownMenu").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.matches('.nav-link')) {
+        const dropdowns = document.getElementsByClassName("dropdown-content");
+        for (let i = 0; i < dropdowns.length; i++) {
+          dropdowns[i].classList.remove('show');
+        }
+      }
+    }
+
+    // 승인
+    function submit_ed() {
+//        window.location.href = '이동할 경로';
+    }
+
+    // 삭제
+    function submit_del() {
+//        window.location.href = '이동할 경로';
+  }
+  </script>
+</body>
+</html>
+s
